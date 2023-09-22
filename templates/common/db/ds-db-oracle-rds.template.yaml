@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: 'v5.64: This template deploys an Oracle RDS instance for Deep Security
+Description: 'v5.69: This template deploys an Oracle RDS instance for Deep Security
   Manager. (qs-1ngr590i9)'
 Metadata:
   cfn-lint:
@@ -18,18 +18,12 @@ Parameters:
     - db.m5.xlarge
     - db.m5.2xlarge
     - db.m5.4xlarge
-    - db.m4.large
-    - db.m4.xlarge
-    - db.m4.2xlarge
-    - db.m4.4xlarge
-    - db.r4.large
-    - db.r4.xlarge
-    - db.r4.2xlarge
-    - db.r4.4xlarge
+    - db.m5.8xlarge
     - db.r5.large
     - db.r5.xlarge
     - db.r5.2xlarge
     - db.r5.4xlarge
+    - db.r5.8xlarge
     - db.t3.small
     - db.t3.medium
     - db.t3.large
@@ -37,12 +31,12 @@ Parameters:
     - db.t3.2xlarge
     ConstraintDescription: must select a valid database instance type.
   DBIStorageAllocation:
-    Default: 10
+    Default: 20
     Description: The size of the Deep Security database (Gb)
     Type: Number
-    MinValue: 10
+    MinValue: 20
     MaxValue: 3072
-    ConstraintDescription: must be between 10 and 3072Gb.
+    ConstraintDescription: must be between 20 and 3072Gb.
   DBPBackupDays:
     Default: 1
     Description: Days to keep automatic RDS backups (0-35)
@@ -78,10 +72,10 @@ Parameters:
     ConstraintDescription: must begin with a letter and contain only alphanumeric
       characters.
   StorageType:
-    Default: gp2
+    Default: gp3
     Type: String
     AllowedValues:
-    - gp2
+    - gp3
   RDSSG:
     Type: AWS::EC2::SecurityGroup::Id
   DBISubnetGroupName:
@@ -103,7 +97,7 @@ Resources:
       AllocatedStorage: !Ref DBIStorageAllocation
       DBInstanceClass: !Ref DBIRDSInstanceSize
       Engine: oracle-se2
-      EngineVersion: 19.0.0.0.ru-2020-04.rur-2020-04.r1
+      EngineVersion: 19.0.0.0.ru-2022-10.rur-2022-10.r1
       MasterUsername: !Ref DBICAdminName
       MasterUserPassword: !Ref DBICAdminPassword
       VPCSecurityGroups:
